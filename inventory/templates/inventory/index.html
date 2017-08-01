@@ -13,8 +13,13 @@
         </thead>
         <tbody>
         {% for product in products %}
+
             <tr>
-                <th>{{ product.id }}</th>
+                <th>
+                    <a href="{% url 'detail' product.id %}">
+                        {{ product.id }}
+                    </a>
+                </th>
                 <td>{{ product.name }}</td>
                 <td>{{ product.cetagory }}</td>
                 <td>{{ product.supplier }}</td>
