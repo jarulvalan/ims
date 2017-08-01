@@ -1,6 +1,8 @@
 from django.shortcuts import render
-from django.http import HttpResponse
+from .models import Product
 
 
 def index(request):
-    return render(request, 'inventory/index.html')
+    products = Product.objects.all()
+    context = {'products': products}
+    return render(request, 'inventory/index.html', context)

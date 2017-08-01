@@ -1,9 +1,29 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Inventory || Management System </title>
-</head>
-<body>
-    <h1 style="background: whitesmoke">This is new beginning of a great history </h1>
-</body>
-</html>
+{% extends 'inventory/base.html' %}
+
+{% block content %}
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th>#</th>
+            <th> Name</th>
+            <th>Category</th>
+            <th>Supplier</th>
+            <th>Unit Price</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for product in products %}
+            <tr>
+                <th>{{ product.id }}</th>
+                <td>{{ product.name }}</td>
+                <td>{{ product.cetagory }}</td>
+                <td>{{ product.supplier }}</td>
+                <td>{{ product.unit_price }}</td>
+            </tr>
+        {% endfor %}
+
+        </tbody>
+    </table>
+
+{% endblock %}
+
