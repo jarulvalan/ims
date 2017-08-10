@@ -34,7 +34,7 @@ def addnew(request):
             return redirect('index')
     else:
         form = ProductForm()
-    return render(request, 'inventory/new.html', {'form':form})
+    return render(request, 'inventory/new.html', {'form': form})
 
 
 def edit(request, pk):
