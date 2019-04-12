@@ -7,4 +7,5 @@ urlpatterns = [
     url(r'^(?P<pk>\d+)$', detail, name="detail"),
     url(r'^edit/(?P<pk>\d+)$', edit, name="edit"),
     url(r'^addnew$', addnew, name="addnew"),
+    url(r'^outgoing', outgoing, name="outgoing"),
 ]

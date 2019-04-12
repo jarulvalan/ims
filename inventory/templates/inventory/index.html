@@ -3,7 +3,8 @@
 {% block content %}
 
     <div class="buttion_place">
-        <a href="{% url 'addnew' %}" class="btn btn-primary btn-lg active" role="button" aria-pressed="true"> + Add Product</a>
+        <a href="{% url 'addnew' %}" class="btn btn-primary btn-lg active" role="button" aria-pressed="true"> + Incoming Products</a>
+        <a href="{% url 'outgoing' %}" class="btn btn-primary btn-lg active" role="button" aria-pressed="true"> - Outgoing Products</a>
     </div>
 
     <table class="table table-hover">
@@ -14,6 +15,8 @@
             <th>Category</th>
             <th>Supplier</th>
             <th>Unit Price</th>
+            <th>Quantity</th>
+            <th>Date</th>
         </tr>
         </thead>
         <tbody>
@@ -29,6 +32,8 @@
                 <td>{{ product.cetagory }}</td>
                 <td>{{ product.supplier }}</td>
                 <td>{{ product.unit_price }}</td>
+                <td>{{ product.quantity }}</td>
+                <td>{{ product.date }}</td>
             </tr>
         {% endfor %}
 
