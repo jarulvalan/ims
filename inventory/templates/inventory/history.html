@@ -1,0 +1,73 @@
+{% extends 'inventory/base.html' %}
+
+{% block content %}
+
+    <div class="buttion_place">
+        <a href="{% url 'addnew' %}" class="btn btn-primary btn-lg active" role="button" aria-pressed="true"> Incoming History</a>
+    </div>
+
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th> Name</th>
+            <th>Category</th>
+            <th>Supplier</th>
+            <th>Unit Price</th>
+            <th>Quantity</th>
+            <th>Date</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for product in products %}
+
+            <tr>
+                <th>
+                    <a href="{% url 'detail' product.pk %}">
+                        {{ incoming.pk }}
+                    </a>
+                </th>
+                <td>{{ incoming.name }}</td>
+                <td>{{ incoming.cetagory }}</td>
+                <td>{{ incoming.supplier }}</td>
+                <td>{{ incoming.unit_price }}</td>
+                <td>{{ incoming.quantity }}</td>
+                <td>{{ incoming.date }}</td>
+            </tr>
+        {% endfor %}
+
+        </tbody>
+    </table>
+
+    <div class="buttion_place">
+        <a href="{% url 'addnew' %}" class="btn btn-primary btn-lg active" role="button" aria-pressed="true"> Outgoing History</a>
+    </div>
+
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th> Engineer Name</th>
+            <th>Quantity</th>
+            <th>Date</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for product in products %}
+
+            <tr>
+                <th>
+                    <a href="{% url 'detail' product.pk %}">
+                        {{ outgoing.pk }}
+                    </a>
+                </th>
+                <td>{{ outgoing.product_id }}</td>
+                <td>{{ outgoing.engg_name }}</td>
+                <td>{{ outgoing.quantity }}</td>
+                <td>{{ outgoing.date }}</td>
+            </tr>
+        {% endfor %}
+
+        </tbody>
+    </table>
+{% endblock %}

@@ -21,11 +21,17 @@ def detail(request, pk):
 
 
 def outgoing(request):
+    #form=OutgoingForm()
     if request.method == 'POST':
         product_id = int(request.POST['product_id'])
         quantity = int(request.POST['quantity'])
         #print(product_id, "--", quantity)
         # Query the database
+        product_ids_list=Product.objects.all().order_by('id')
+        for i in product_ids_list:
+
+            print(i.id)
+
         products = Product.objects.filter(id=product_id)
         for items in products:
             #print(items.id, items.quantity)
@@ -43,7 +49,8 @@ def outgoing(request):
                 if form.is_valid():
                     form.save()
                     return redirect('index')
-            return redirect('index')
+            #return redirect('index')
+        return render(request, 'inventory/outgoing.html', {'id':product_ids_list})
     else:
         form = OutgoingForm()
         return render(request, 'inventory/outgoing.html', {'form': form})
@@ -60,6 +67,7 @@ def addnew(request):
         if count > 0:
             for items in products:
                 if name==items.name and cetagory==items.cetagory and supplier==items.supplier:
+                    items.quantity = items.quantity + int(request.POST['quantity'])
                     print("Items Saved")
                     items.save()
                     print("Items Saved")
@@ -87,3 +95,9 @@ def edit(request, pk):
     else:
         form = ProductForm(instance=product)
     return render(request, 'inventory/edit.html', {'form': form})
+
+
+def history(request):
+    incoming = incoming.objects.all()
+    context = {'incoming': incoming}
+    return render(request, 'inventory/history.html', context)

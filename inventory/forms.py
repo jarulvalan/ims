@@ -19,4 +19,6 @@ class OutgoingForm(forms.ModelForm):
 
     class Meta:
         model = outgoing
+        product_id=forms.ModelChoiceField(queryset=Product.objects.order_by('product_id').values_list('id', flat=True).distinct())
         fields = ('product_id', 'engg_name', 'quantity', 'date')
+        #forms.ModelChoiceField(queryset=Product.objects.order_by('id').values_list('id', flat=True).distinct())
