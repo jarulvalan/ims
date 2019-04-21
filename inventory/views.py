@@ -6,7 +6,7 @@ from .forms import OutgoingForm
 from .models import outgoing
 from .forms import IncomingForm
 from .models import incoming
-
+from .forms import historyForm
 
 #from dal.autocomplete import Select2ListView
 def index(request):
@@ -98,6 +98,23 @@ def edit(request, pk):
 
 
 def history(request):
-    incoming = incoming.objects.all()
-    context = {'incoming': incoming}
-    return render(request, 'inventory/history.html', context)
+    incoming_obj = incoming.objects.all()
+    context = {'incoming': incoming_obj}
+    #return render(request, 'inventory/history.html', context)
+    if request.method == 'GET':
+        form = historyForm
+    else:
+        # A POST request: Handle Form Upload
+        form = historyForm(request.POST) # Bind data from request.POST into a PostForm
+ 
+        # If data is valid, proceeds to create a new post and redirect the user
+        if form.is_valid():
+            #content = form.cleaned_data['search_content']
+            #created_at = form.cleaned_data['created_at']
+            #post = m.Post.objects.create(content=content,
+            #                             created_at=created_at)
+            return render(request, 'inventory/history.html', context)
+ 
+    return render(request, 'inventory/history.html', {
+        'form': form,
+    })

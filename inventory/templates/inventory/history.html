@@ -1,11 +1,12 @@
 {% extends 'inventory/base.html' %}
 
 {% block content %}
-
-    <div class="buttion_place">
-        <a href="{% url 'addnew' %}" class="btn btn-primary btn-lg active" role="button" aria-pressed="true"> Incoming History</a>
-    </div>
-
+    <form action='inventory/history.html' method='post'>{% csrf_token %}
+            {{ form.as_p }}
+            <input type='submit' value='Submit' />
+    </form>
+    
+    <h1><ul>Incoming History</ul></h1>
     <table class="table table-hover">
         <thead>
         <tr>
@@ -39,9 +40,7 @@
         </tbody>
     </table>
 
-    <div class="buttion_place">
-        <a href="{% url 'addnew' %}" class="btn btn-primary btn-lg active" role="button" aria-pressed="true"> Outgoing History</a>
-    </div>
+    <h1><ul>Outgoing History</ul></h1>
 
     <table class="table table-hover">
         <thead>
