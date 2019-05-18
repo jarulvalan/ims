@@ -23,12 +23,13 @@ class OutgoingForm(forms.ModelForm):
         fields = ('product_id', 'engg_name', 'quantity', 'date')
         #forms.ModelChoiceField(queryset=Product.objects.order_by('id').values_list('id', flat=True).distinct())
 
-ACTION= [
+action = (
     ('incoming', 'Incoming'),
-    ('outgoing', 'Outgoing'),
-    ]
+    ('outgoing', 'Outgoing'),)
+
 class historyForm(forms.Form):
-    search_content= forms.CharField(max_length=100)
-    start = forms.DateTimeField()
-    end = forms.DateTimeField()
-    widget=forms.RadioSelect(choices=ACTION)
+    #class Meta:
+    search_content= forms.CharField(max_length=100, required = False)
+    start = forms.DateField(input_formats=['%Y-%m-%d'], required = False)
+    end = forms.DateTimeField(input_formats=['%Y-%m-%d'], required = False)
+    option = forms.ChoiceField(choices=action, required=True)

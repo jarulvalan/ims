@@ -11,29 +11,27 @@
         <thead>
         <tr>
             <th>#</th>
-            <th> Name</th>
-            <th>Category</th>
-            <th>Supplier</th>
-            <th>Unit Price</th>
+            <th>Product Id</th>
+            <th>Engineer Name</th>
             <th>Quantity</th>
             <th>Date</th>
+            
         </tr>
         </thead>
         <tbody>
-        {% for product in products %}
+        {% for outgoing in lookups %}
 
             <tr>
                 <th>
-                    <a href="{% url 'detail' product.pk %}">
-                        {{ product.pk }}
+                    <a href="{% url 'detail' outgoing.pk %}">
+                        {{ outgoing.pk }}
                     </a>
                 </th>
-                <td>{{ product.name }}</td>
-                <td>{{ product.cetagory }}</td>
-                <td>{{ product.supplier }}</td>
-                <td>{{ product.unit_price }}</td>
-                <td>{{ product.quantity }}</td>
-                <td>{{ product.date }}</td>
+                <td>{{ outgoing.product_id }}</td>
+                <td>{{ outgoing.engg_name }}</td>
+                <td>{{ outgoing.quantity }}</td>
+                <td>{{ outgoing.date }}</td>
+                
             </tr>
         {% endfor %}
 

@@ -5,7 +5,7 @@
     
         <a href="{% url 'addnew' %}" class="btn btn-primary btn-lg active" role="button" aria-pressed="true"> + Incoming Products</a>
         <a href="{% url 'outgoing' %}" class="btn btn-primary btn-lg active" role="button" aria-pressed="true"> - Outgoing Products</a>
-        <a href="{% url 'history' %}" class="btn btn-primary btn-lg active" role="button" aria-pressed="true"> Transaction History</a>
+    
 
     <table class="table table-hover">
         <thead>
@@ -20,20 +20,20 @@
         </tr>
         </thead>
         <tbody>
-        {% for product in products %}
+        {% for incoming in lookups %}
 
             <tr>
                 <th>
-                    <a href="{% url 'detail' product.pk %}">
-                        {{ product.pk }}
+                    <a href="{% url 'detail' incoming.pk %}">
+                        {{ incoming.pk }}
                     </a>
                 </th>
-                <td>{{ product.name }}</td>
-                <td>{{ product.cetagory }}</td>
-                <td>{{ product.supplier }}</td>
-                <td>{{ product.unit_price }}</td>
-                <td>{{ product.quantity }}</td>
-                <td>{{ product.date }}</td>
+                <td>{{ incoming.name }}</td>
+                <td>{{ incoming.cetagory }}</td>
+                <td>{{ incoming.supplier }}</td>
+                <td>{{ incoming.unit_price }}</td>
+                <td>{{ incoming.quantity }}</td>
+                <td>{{ incoming.date }}</td>
             </tr>
         {% endfor %}
 

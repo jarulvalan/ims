@@ -7,7 +7,7 @@ from .models import outgoing
 from .forms import IncomingForm
 from .models import incoming
 from .forms import historyForm
-
+from django.db.models import Q
 #from dal.autocomplete import Select2ListView
 def index(request):
     products = Product.objects.all()
@@ -98,11 +98,65 @@ def edit(request, pk):
 
 
 def history(request):
-    incoming_obj = incoming.objects.all()
-    context = {'incoming': incoming_obj}
+    #incoming_obj = incoming.objects.all()
+    #context = {'incoming': incoming_obj}
+    
     #return render(request, 'inventory/history.html', context)
-    if request.method == 'GET':
-        form = historyForm
+    if request.method == 'POST':
+        search_content=request.POST['search_content']
+        start=request.POST['start']
+        end=request.POST['end']
+        option=request.POST['option']
+        if option == "incoming":
+            
+            #print(request.POST)
+            
+            if search_content and start and end:
+
+                end=end + " 23:59:59"
+                condition=((Q(name__icontains=str(search_content)) | Q(cetagory__contains=str(search_content)) | Q(supplier__contains=str(search_content)) | Q(description__contains=str(search_content))) & Q(date__range=[start, end]))
+                lookups= incoming.objects.filter(condition)
+                    #print("lookups :", lookups)
+                context={'lookups': lookups}
+                return render(request, 'inventory/incoming_history.html', context)
+            elif search_content and not start and not end:
+                condition=((Q(name__icontains=str(search_content)) | Q(cetagory__contains=str(search_content)) | Q(supplier__contains=str(search_content)) | Q(description__contains=str(search_content))))
+                lookups= incoming.objects.filter(condition)
+                #print("lookups :", lookups)
+                context={'lookups': lookups}
+                return render(request, 'inventory/incoming_history.html', context)
+            elif not search_content and start and end:
+                end=end + " 23:59:59"
+                condition=(Q(date__range=[start, end]))
+                lookups= incoming.objects.filter(condition)
+                #print("lookups :", lookups)
+                context={'lookups': lookups}
+                return render(request, 'inventory/incoming_history.html', context)
+        elif option == "outgoing":
+            if search_content and start and end:
+                print(request.POST)
+                end=end + " 23:59:59"
+                obj=outgoing.objects.all()
+                print("---------------------------", obj)
+                condition=((Q(engg_name__icontains=str(search_content))) & Q(date__range=[start, end]))
+                lookups= outgoing.objects.filter(condition)
+                #print("lookups :", lookups)
+                context={'lookups': lookups}
+                return render(request, 'inventory/outgoing_history.html', context)
+            elif search_content and not start and not end:
+                condition=(Q(engg_name__icontains=str(search_content)))
+                lookups= outgoing.objects.filter(condition)
+                #print("lookups :", lookups)
+                context={'lookups': lookups}
+                return render(request, 'inventory/outgoing_history.html', context)
+            elif not search_content and start and end:
+                end=end + " 23:59:59"
+                condition=(Q(date__range=[start, end]))
+                lookups= outgoing.objects.filter(condition)
+                print("lookups :", lookups)
+                context={'lookups': lookups}
+                return render(request, 'inventory/outgoing_history.html', context)
+
     else:
         # A POST request: Handle Form Upload
         form = historyForm(request.POST) # Bind data from request.POST into a PostForm
@@ -113,8 +167,6 @@ def history(request):
             #created_at = form.cleaned_data['created_at']
             #post = m.Post.objects.create(content=content,
             #                             created_at=created_at)
-            return render(request, 'inventory/history.html', context)
+            return redirect('index')
  
-    return render(request, 'inventory/history.html', {
-        'form': form,
-    })
+    return render(request, 'inventory/history.html', {'form': form})
