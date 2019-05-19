@@ -1,6 +1,6 @@
 from django import forms
 from .models import Product
-from .models import outgoing
+from .models import outgoing_supply
 from .models import incoming
 from datetime import datetime
 class ProductForm(forms.ModelForm):
@@ -18,14 +18,14 @@ class IncomingForm(forms.ModelForm):
 class OutgoingForm(forms.ModelForm):
 
     class Meta:
-        model = outgoing
+        model = outgoing_supply
         #product_id=forms.ModelChoiceField(queryset=Product.objects.order_by('product_id').values_list('id', flat=True).distinct())
         fields = ('product_id', 'engg_name', 'quantity', 'date')
         #forms.ModelChoiceField(queryset=Product.objects.order_by('id').values_list('id', flat=True).distinct())
 
 action = (
-    ('incoming', 'Incoming'),
-    ('outgoing', 'Outgoing'),)
+    ('Incoming', 'Incoming Transactions'),
+    ('Outgoing', 'Outgoing Transactions'),)
 
 class historyForm(forms.Form):
     #class Meta:

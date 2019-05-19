@@ -20,7 +20,7 @@ class incoming(models.Model):
     date=models.DateTimeField(default=datetime.now())
     description = models.TextField(blank=True, null=True)
     
-class outgoing(models.Model):
+class outgoing_supply(models.Model):
     product_id=models.PositiveIntegerField()
     engg_name=models.CharField(max_length=200)
     #name = models.CharField(max_length=200)

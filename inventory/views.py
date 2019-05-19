@@ -3,7 +3,7 @@ from django.http import Http404
 from .models import Product
 from .forms import ProductForm
 from .forms import OutgoingForm
-from .models import outgoing
+from .models import outgoing_supply
 from .forms import IncomingForm
 from .models import incoming
 from .forms import historyForm
@@ -28,9 +28,9 @@ def outgoing(request):
         #print(product_id, "--", quantity)
         # Query the database
         product_ids_list=Product.objects.all().order_by('id')
-        for i in product_ids_list:
+        #for i in product_ids_list:
 
-            print(i.id)
+        #    print(i.id)
 
         products = Product.objects.filter(id=product_id)
         for items in products:
@@ -98,16 +98,13 @@ def edit(request, pk):
 
 
 def history(request):
-    #incoming_obj = incoming.objects.all()
-    #context = {'incoming': incoming_obj}
-    
-    #return render(request, 'inventory/history.html', context)
     if request.method == 'POST':
         search_content=request.POST['search_content']
         start=request.POST['start']
         end=request.POST['end']
         option=request.POST['option']
-        if option == "incoming":
+        ## If option selected Incoming
+        if option == "Incoming":
             
             #print(request.POST)
             
@@ -132,41 +129,51 @@ def history(request):
                 #print("lookups :", lookups)
                 context={'lookups': lookups}
                 return render(request, 'inventory/incoming_history.html', context)
-        elif option == "outgoing":
+            else:
+                lookups= incoming.objects.all()
+                #print("lookups :", lookups)
+                context={'lookups': lookups}
+                return render(request, 'inventory/incoming_history.html', context)
+        ## If option selected Outgoing
+        elif option == "Outgoing":
             if search_content and start and end:
                 print(request.POST)
                 end=end + " 23:59:59"
-                obj=outgoing.objects.all()
-                print("---------------------------", obj)
-                condition=((Q(engg_name__icontains=str(search_content))) & Q(date__range=[start, end]))
-                lookups= outgoing.objects.filter(condition)
+                if search_content.isdigit():
+                    condition=((Q(engg_name__icontains=str(search_content)) | Q(product_id__icontains=int(search_content))) & Q(date__range=[start, end]))
+                else:
+                    condition=((Q(engg_name__icontains=str(search_content))) & Q(date__range=[start, end]))
+                lookups= outgoing_supply.objects.filter(condition)
                 #print("lookups :", lookups)
                 context={'lookups': lookups}
                 return render(request, 'inventory/outgoing_history.html', context)
             elif search_content and not start and not end:
-                condition=(Q(engg_name__icontains=str(search_content)))
-                lookups= outgoing.objects.filter(condition)
+                if search_content.isdigit():
+                    condition=(Q(engg_name__icontains=str(search_content)) | Q(product_id__icontains=int(search_content)))
+                else:
+                    condition=(Q(engg_name__icontains=str(search_content)))
+                lookups= outgoing_supply.objects.filter(condition)
                 #print("lookups :", lookups)
                 context={'lookups': lookups}
                 return render(request, 'inventory/outgoing_history.html', context)
             elif not search_content and start and end:
                 end=end + " 23:59:59"
                 condition=(Q(date__range=[start, end]))
-                lookups= outgoing.objects.filter(condition)
-                print("lookups :", lookups)
+                lookups= outgoing_supply.objects.filter(condition)
+                #print("lookups :", lookups)
+                context={'lookups': lookups}
+                return render(request, 'inventory/outgoing_history.html', context)
+            else:
+                lookups= outgoing_supply.objects.all()
+                #print("lookups :", lookups)
                 context={'lookups': lookups}
                 return render(request, 'inventory/outgoing_history.html', context)
 
     else:
         # A POST request: Handle Form Upload
         form = historyForm(request.POST) # Bind data from request.POST into a PostForm
- 
-        # If data is valid, proceeds to create a new post and redirect the user
         if form.is_valid():
-            #content = form.cleaned_data['search_content']
-            #created_at = form.cleaned_data['created_at']
-            #post = m.Post.objects.create(content=content,
-            #                             created_at=created_at)
+            pass
             return redirect('index')
  
-    return render(request, 'inventory/history.html', {'form': form})
+        return render(request, 'inventory/history.html', {'form': form})
