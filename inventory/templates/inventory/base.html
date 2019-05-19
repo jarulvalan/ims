@@ -9,7 +9,6 @@
 <link rel="stylesheet" type="text/css" href="{% static 'inventory/css/style.css' %}"/>
 <link rel="stylesheet" type="text/css" href="{% static 'inventory/css/bootstrap.min.css' %}"/>
 
-
 <body>
 
 <nav class="navbar navbar-toggleable-md navbar-inverse bg-inverse fixed-top">
@@ -31,7 +30,9 @@
         </ul>
         
     </nav>
-
+    <a href="{% url 'addnew' %}" class="btn btn-primary btn-lg active" role="button" aria-pressed="true"> + Incoming Products</a>
+    <a href="{% url 'outgoing' %}" class="btn btn-primary btn-lg active" role="button" aria-pressed="true"> - Outgoing Products</a>
+    <a href="{% url 'history' %}" class="btn btn-primary btn-lg active" role="button" aria-pressed="true"> Transaction History</a>
     <div class="container">
 
       <div class="starter-template">

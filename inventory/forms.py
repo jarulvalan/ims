@@ -29,7 +29,7 @@ action = (
 
 class historyForm(forms.Form):
     #class Meta:
-    search_content= forms.CharField(max_length=100, required = False)
-    start = forms.DateField(input_formats=['%Y-%m-%d'], required = False)
-    end = forms.DateTimeField(input_formats=['%Y-%m-%d'], required = False)
+    search_content= forms.CharField(max_length=100, required = False, label='Incoming (Name/Cetagory/Supplier/Description) Outgoing (Product_id/Engineer)')
+    start = forms.DateField(input_formats=['%Y-%m-%d'], required = False, label="Start Date (YYYY-MM-DD)")
+    end = forms.DateTimeField(input_formats=['%Y-%m-%d'], required = False, label="End Date (YYYY-MM-DD)")
     option = forms.ChoiceField(choices=action, required=True)

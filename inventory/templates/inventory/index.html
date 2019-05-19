@@ -3,14 +3,12 @@
 {% block content %}
 
     
-        <a href="{% url 'addnew' %}" class="btn btn-primary btn-lg active" role="button" aria-pressed="true"> + Incoming Products</a>
-        <a href="{% url 'outgoing' %}" class="btn btn-primary btn-lg active" role="button" aria-pressed="true"> - Outgoing Products</a>
-        <a href="{% url 'history' %}" class="btn btn-primary btn-lg active" role="button" aria-pressed="true"> Transaction History</a>
+       
 
     <table class="table table-hover">
         <thead>
-        <tr>
-            <th>#</th>
+        <tr bgcolor="#FF7F50">
+            <th>Product Id</th>
             <th> Name</th>
             <th>Category</th>
             <th>Supplier</th>
@@ -22,7 +20,7 @@
         <tbody>
         {% for product in products %}
 
-            <tr>
+            <tr bgcolor="#C0C0C0">
                 <th>
                     <a href="{% url 'detail' product.pk %}">
                         {{ product.pk }}
